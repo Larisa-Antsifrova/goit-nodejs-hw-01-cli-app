@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 const contactsPath = path.join(__dirname, "db", "contacts.json");
 
@@ -39,7 +40,16 @@ function removeContact(contactId) {
 }
 
 function addContact(name, email, phone) {
-  console.log("addContact");
+  fs.readFile(contactsPath, "utf-8")
+    .then((contacts) => {
+      const parsedContacts = JSON.parse(contacts);
+      parsedContacts.push({ id: uuidv4(), name, email, phone });
+
+      fs.writeFile(contactsPath, JSON.stringify(parsedContacts, null, 2)).then(() =>
+        console.log(`The contact was sucessfully added!`)
+      );
+    })
+    .catch((error) => console.log(error.message));
 }
 
 module.exports = { listContacts, getContactById, removeContact, addContact };
