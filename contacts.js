@@ -44,9 +44,9 @@ function addContact(name, email, phone) {
   fs.readFile(contactsPath, "utf-8")
     .then(JSON.parse)
     .then((contacts) => {
-      contacts.push({ id: uuidv4(), name, email, phone });
+      const updatedContacts = [...contacts, { id: uuidv4(), name, email, phone }];
 
-      fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2)).then(() =>
+      fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2)).then(() =>
         console.log(`The contact was sucсessfully added!`)
       );
     })
