@@ -20,7 +20,22 @@ function getContactById(contactId) {
 }
 
 function removeContact(contactId) {
-  console.log("removeContact");
+  fs.readFile(contactsPath, "utf-8")
+    .then((contacts) => {
+      const parsedContacts = JSON.parse(contacts);
+      const isInContacts = parsedContacts.some((contact) => contact.id === contactId);
+
+      if (!isInContacts) {
+        throw new Error(`The contact with ID${contactId} does not exist!`);
+      }
+
+      const filteredContacts = parsedContacts.filter((contact) => contact.id !== contactId);
+
+      fs.writeFile(contactsPath, JSON.stringify(filteredContacts, null, 2)).then(() =>
+        console.log(`The contact with ID${contactId} was deleted!`)
+      );
+    })
+    .catch((error) => console.log(error.message));
 }
 
 function addContact(name, email, phone) {

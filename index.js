@@ -1,3 +1,3 @@
 const contactsMethods = require("./contacts.js");
 
-console.log(contactsMethods.listContacts());
+console.log(contactsMethods.removeContact(6));
