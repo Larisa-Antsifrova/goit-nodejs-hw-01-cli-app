@@ -14,7 +14,7 @@ function getContactById(contactId) {
   fs.readFile(contactsPath, "utf-8")
     .then((contacts) => {
       const requiredContact =
-        JSON.parse(contacts).find((contact) => contact.id === contactId) || "No contact with this ID found.";
+        JSON.parse(contacts).find((contact) => contact.id === contactId) || `No contact with ID${contactId} found.`;
       console.log(requiredContact);
     })
     .catch((error) => console.log(error.message));
@@ -24,7 +24,7 @@ function removeContact(contactId) {
   fs.readFile(contactsPath, "utf-8")
     .then((contacts) => {
       const parsedContacts = JSON.parse(contacts);
-      const isInContacts = parsedContacts.some((contact) => contact.id === contactId);
+      const isInContacts = parsedContacts.find((contact) => contact.id === contactId);
 
       if (!isInContacts) {
         throw new Error(`The contact with ID${contactId} does not exist!`);
