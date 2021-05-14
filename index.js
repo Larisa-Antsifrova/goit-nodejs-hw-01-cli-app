@@ -1,12 +1,42 @@
+const { Command } = require("commander");
 const contactsMethods = require("./contacts.js");
 
-// Testing the contactsMethods functions
-contactsMethods.listContacts();
+const program = new Command();
 
-contactsMethods.getContactById(7);
-contactsMethods.getContactById(55);
+program
+  .option("-a, --action <type>", "hoose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-contactsMethods.removeContact(3);
-contactsMethods.removeContact(55);
+program.parse(process.argv);
 
-// contactsMethods.addContact("Junior Developer", "junior@gmail.com", "(063)3896690");
+const argv = program.opts();
+
+console.log("options", argv);
+
+function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      contactsMethods.listContacts();
+      break;
+
+    case "get":
+      contactsMethods.getContactById(id);
+      break;
+
+    case "add":
+      contactsMethods.addContact(name, email, phone);
+      break;
+
+    case "remove":
+      contactsMethods.removeContact(id);
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
