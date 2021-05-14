@@ -4,7 +4,7 @@ Description:
 
 - CLI Application to Handle Contacts.
 
-  Tools:
+ Tools:
 
 - Node.js
 - commander
