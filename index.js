@@ -1,10 +1,10 @@
-const { Command } = require("commander");
+const commander = require("commander");
 const contactsMethods = require("./contacts.js");
 
-const program = new Command();
+const program = new commander.Command();
 
 program
-  .option("-a, --action <type>", "hoose action")
+  .addOption(new commander.Option("-a, --action <type>", "choose action").choices(["list", "get", "remove", "add"]))
   .option("-i, --id <type>", "user id")
   .option("-n, --name <type>", "user name")
   .option("-e, --email <type>", "user email")
@@ -13,8 +13,6 @@ program
 program.parse(process.argv);
 
 const argv = program.opts();
-
-console.log("options", argv);
 
 function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
