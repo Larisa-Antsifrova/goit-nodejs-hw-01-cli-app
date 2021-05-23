@@ -11,25 +11,25 @@ Tools:
 
 ## Examples:
 
-### Получаем и выводим весь список контактов в виде таблицы (console.table)
+### Getting and outputting the whole list of contacts via console.table
 
 node index.js --action list
 
 ![Task](./results/hw-01-1.JPG)
 
-### Получаем контакт по id
+### Getting a contact by id
 
 node index.js --action get --id 5
 
 ![Task](./results/hw-01-2.JPG)
 
-### Добавялем контакт
+### Adding a contact
 
 node index.js --action add --name Mango --email mango@gmail.com --phone 322-22-22
 
 ![Task](./results/hw-01-3.JPG)
 
-### Удаляем контакт
+### Deleting a contact
 
 node index.js --action remove --id=3
 
