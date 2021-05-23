@@ -10,7 +10,7 @@ const contactsPath = path.join(__dirname, 'db', 'contacts.json');
 async function readFile(path) {
   return await fs.readFile(path, 'utf-8');
 }
-
+// Helper function to write the new content to a file
 async function writeFile(path, data) {
   await fs.writeFile(path, JSON.stringify(data, null, 2));
 }
@@ -35,6 +35,19 @@ async function getContactById(contactId) {
   }
 }
 
+async function addContact(name, email, phone) {
+  try {
+    const content = await readFile(contactsPath);
+    const contacts = [...JSON.parse(content), { id: uuidv4(), name, email, phone }];
+
+    await writeFile(contactsPath, contacts);
+
+    console.log(`The contact was sucсessfully added!`);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 async function removeContact(contactId) {
   try {
     const content = await readFile(contactsPath);
@@ -54,17 +67,4 @@ async function removeContact(contactId) {
   }
 }
 
-async function addContact(name, email, phone) {
-  try {
-    const content = await readFile(contactsPath);
-    const contacts = [...JSON.parse(content), { id: uuidv4(), name, email, phone }];
-
-    await writeFile(contactsPath, contacts);
-
-    console.log(`The contact was sucсessfully added!`);
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
-module.exports = { listContacts, getContactById, removeContact, addContact };
+module.exports = { listContacts, getContactById, addContact, removeContact };
